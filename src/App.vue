@@ -12,7 +12,7 @@ function attachFile() {
 }
 function sendMessage() {
   
-    // Logic to send the message
+  // Logic to send the message
 }
 </script>
 
@@ -27,18 +27,16 @@ function sendMessage() {
     </div>
 
     <div class="input-message">
-      <Button icon="pi pi-paperclip"  
-          @click="attachFile" />
+        <Button icon="pi pi-paperclip" @click="attachFile" />
 
-      <IftaLabel>
+        <IftaLabel class="flex-1"> 
         <InputText  
-            class="input-text-meassange flex-1"
+            class="input-text-meassange w-full" 
             v-model="message" 
             placeholder="Input message..."
             @keyup.enter="sendMessage"
-          />
-
-      </IftaLabel>
+        />
+        </IftaLabel>
 
       <Button 
       icon="pi pi-send"
@@ -53,6 +51,20 @@ function sendMessage() {
 
 
 <style>
+.input-message {
+  display: flex;
+  align-items: center;
+
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.input-text-meassange {
+  width: 100%;
+}
+
 
 *{
   margin: 0 !important;
