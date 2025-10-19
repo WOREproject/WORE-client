@@ -4,6 +4,8 @@ import App from "./App.vue";
 import PrimeVue from "primevue/config";
 import "primevue/resources/primevue.min.css";
 import "primeicons/primeicons.css";
+import "primevue/resources/themes/lara-dark-blue/theme.css";
+
 
 // ⚙️ начальная тема — светлая
 import "primevue/resources/themes/lara-light-blue/theme.css";
@@ -14,7 +16,7 @@ import Card from "primevue/card";
 import Avatar from "primevue/avatar";
 import Badge from "primevue/badge";
 import InputGroup from "primevue/inputgroup";
-
+import Message from 'primevue/message';
 
 
 
@@ -34,12 +36,12 @@ app.component("Avatar", Avatar);
 app.component("Badge", Badge);
 app.component("InputGroup", InputGroup);
 
-// 🌙 функция для смены темы (по желанию)
-app.config.globalProperties.$setTheme = (theme) => {
+
+app.config.globalProperties.$setTheme = (theme: string) => {
   const id = "primevue-theme";
-  let link = document.getElementById(id);
+  let link = document.getElementById(id) as HTMLLinkElement;
   if (!link) {
-    link = document.createElement("link");
+    link = document.createElement("link") as HTMLLinkElement;
     link.id = id;
     link.rel = "stylesheet";
     document.head.appendChild(link);
@@ -47,6 +49,5 @@ app.config.globalProperties.$setTheme = (theme) => {
   link.href = `node_modules/primevue/resources/themes/${theme}/theme.css`;
 };
 
-// пример: app.config.globalProperties.$setTheme("lara-dark-blue")
 
 app.mount("#app");

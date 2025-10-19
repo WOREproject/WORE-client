@@ -1,103 +1,161 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, nextTick } from "vue";
 import { invoke } from "@tauri-apps/api/core";
 
+// -----------------------------
+// Define the type for chat messages
+// -----------------------------
+type Message = {
+  from: string;       // Sender of the message
+  text: string;       // Message text
+  time?: string;      // Optional timestamp
+};
 
-const message = ref<string>("");
+// -----------------------------
+// Reactive state
+// -----------------------------
+const messages = ref<Message[]>([]); // Array to hold chat messages
+const message = ref<string>("");     // Current input text
 
+// -----------------------------
+// Functions
+// -----------------------------
 
-
+// Function to attach a file (placeholder for now)
 function attachFile() {
-  // Logic to attach a file
+  // TODO: Implement file attachment logic
 }
+
+// Function to send a message
 function sendMessage() {
-  
-  // Logic to send the message
+  if (!message.value) return; // Do nothing if input is empty
+
+  // Add message to the array
+  messages.value.push({
+    from: "Me",
+    text: message.value,
+    time: new Date().toLocaleTimeString()
+  });
+
+  message.value = ""; // Clear the input field
+
+  // Scroll to the bottom after DOM update
+  nextTick(() => {
+    const container = document.querySelector(".messages");
+    if (container) container.scrollTop = container.scrollHeight;
+  });
 }
 </script>
 
 <template>
-<div class="messanger">
-  <div class="chat-list"></div>
+  <div class="messenger">
+    
+    <!-- Sidebar for chat list -->
+    <div class="chat-list"></div>
 
-  <div class="chat-container">
+    <!-- Main chat area -->
+    <div class="chat-container">
 
-    <div class="messages">
+      <!-- Messages display area -->
+      <div class="messages">
+        <div v-for="(msg, index) in messages" :key="index" class="message">
+          <b>{{ msg.from }}:</b> {{ msg.text }}
+        </div>
+      </div>
 
-    </div>
-
-    <div class="input-message">
+      <!-- Input area for new messages -->
+      <div class="input-message">
+        <!-- Attach file button -->
         <Button icon="pi pi-paperclip" @click="attachFile" />
 
+        <!-- Input field -->
         <IftaLabel class="flex-1"> 
-        <InputText  
-            class="input-text-meassange w-full" 
+          <InputText  
+            class="input-text-message w-full" 
             v-model="message" 
             placeholder="Input message..."
             @keyup.enter="sendMessage"
-        />
+          />
         </IftaLabel>
 
-      <Button 
-      icon="pi pi-send"
-      class="send-text-meassange" 
-      @keyup.enter="sendMessage"
-      />
+        <!-- Send button -->
+        <Button 
+          icon="pi pi-send"
+          class="send-text-message" 
+          @click="sendMessage"
+        />
+      </div>
     </div>
   </div>
-</div>
-
 </template>
 
-
 <style>
-.input-message {
-  display: flex;
-  align-items: center;
-
-}
-
-.flex-1 {
-  flex: 1;
-}
-
-.input-text-meassange {
-  width: 100%;
-}
-
-
-*{
+/* -----------------------------
+   General reset
+----------------------------- */
+* {
   margin: 0 !important;
+  box-sizing: border-box;
 }
-.messanger {
+
+/* -----------------------------
+   Layout
+----------------------------- */
+.messenger {
   display: flex;
-  height: 100vh;
+  height: 100vh; /* Full viewport height */
 }
+
+/* Sidebar with chat list */
 .chat-list {
-  flex: 4;
+  flex: 4; /* 40% width */
   border: 1px solid #ccc;
   overflow-y: auto;
 }
+
+/* Main chat area */
 .chat-container {
-  flex: 6;
+  flex: 6; /* 60% width */
   display: flex;
   flex-direction: column;
   border: 1px solid #ccc;
-  overflow-y: auto;
-
 }
+
+/* Messages container */
 .messages {
-  flex: 1;
+  flex: 1;           /* Take all remaining vertical space */
   padding: 10px;
+  overflow-y: auto;   /* Scroll if content overflows */
   border: 1px solid #ccc;
 }
+
+/* Each message */
+.message {
+  margin-bottom: 6px;
+}
+
+/* Input area at the bottom */
 .input-message {
   display: flex;
+  align-items: center;
   padding: 10px;
   border-top: 1px solid #ccc;
 }
-.input-text-meassange {
-  flex: 1;
+
+/* Flex helpers */
+.flex-1 {
+  flex: 1; /* Expand to fill available space */
+}
+
+/* Input field styling */
+.input-text-message {
+  flex: 1;          /* Take all remaining horizontal space */
   margin-right: 10px;
+  width: 100%;
+}
+
+/* Optional: send button styling */
+.send-text-message {
+  /* Add styles if needed */
 }
 </style>
