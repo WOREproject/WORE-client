@@ -32,10 +32,10 @@ function sendMessage() {
 
       <IftaLabel>
         <InputText  
-          class="input-text-meassange flex-1"
-          v-model="message" 
-          placeholder="Введите сообщение..."
-          @keyup.enter="sendMessage"
+            class="input-text-meassange flex-1"
+            v-model="message" 
+            placeholder="Input message..."
+            @keyup.enter="sendMessage"
           />
 
       </IftaLabel>
