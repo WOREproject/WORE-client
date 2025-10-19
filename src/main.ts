@@ -14,8 +14,8 @@ import Card from "primevue/card";
 import Avatar from "primevue/avatar";
 import Badge from "primevue/badge";
 import InputGroup from "primevue/inputgroup";
-import Terminal from 'primevue/terminal';
-import IftaLabel from 'primevue/iftalabel';
+
+
 
 
 

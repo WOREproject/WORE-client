@@ -2,23 +2,49 @@
 import { ref } from "vue";
 import { invoke } from "@tauri-apps/api/core";
 
-const value = ref(null);
+
+const message = ref<string>("");
 
 
 
+function attachFile() {
+  // Logic to attach a file
+}
+function sendMessage() {
+  
+    // Logic to send the message
+}
 </script>
 
 <template>
 <div class="messanger">
   <div class="chat-list"></div>
-  <div class="chat">
-    <div class="card flex justify-center">
+
+  <div class="chat-container">
+
+    <div class="messages">
+
+    </div>
+
+    <div class="input-message">
+      <Button icon="pi pi-paperclip"  
+          @click="attachFile" />
 
       <IftaLabel>
-        <InputText id="message" v-model="value" />
+        <InputText  
+          class="input-text-meassange flex-1"
+          v-model="message" 
+          placeholder="Введите сообщение..."
+          @keyup.enter="sendMessage"
+          />
+
       </IftaLabel>
 
-      <Button label="Send" />
+      <Button 
+      icon="pi pi-send"
+      class="send-text-meassange" 
+      @keyup.enter="sendMessage"
+      />
     </div>
   </div>
 </div>
@@ -27,6 +53,10 @@ const value = ref(null);
 
 
 <style>
+
+*{
+  margin: 0 !important;
+}
 .messanger {
   display: flex;
   height: 100vh;
@@ -36,11 +66,26 @@ const value = ref(null);
   border: 1px solid #ccc;
   overflow-y: auto;
 }
-.chat {
+.chat-container {
   flex: 6;
+  display: flex;
+  flex-direction: column;
   border: 1px solid #ccc;
   overflow-y: auto;
 
 }
-
+.messages {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+.input-message {
+  display: flex;
+  padding: 10px;
+  border-top: 1px solid #ccc;
+}
+.input-text-meassange {
+  flex: 1;
+  margin-right: 10px;
+}
 </style>
