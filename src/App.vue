@@ -59,7 +59,7 @@ function sendMessage() {
       <!-- Messages display area -->
       <div class="messages">
         <div v-for="(msg, index) in messages" :key="index" class="message">
-          <b>{{ msg.from }}:</b> {{ msg.text }}
+          <b>{{ msg.from }}:</b> {{ msg.text }} {{ msg.time ? `(${msg.time})` : "" }}
         </div>
       </div>
 
